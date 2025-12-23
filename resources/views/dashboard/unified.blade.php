@@ -142,7 +142,7 @@
         </div>
         <div class="col-lg-3 col-md-6 col-12">
             <div class="small-box bg-danger">
-                <div class="inner"><h3>{{ $totalMapel }}</h3><p>Total Mapel</p></div>
+                <div class="inner"><h3>{{ $totalMapel }}</h3><p>Total Mata Pelajaran</p></div>
                 <div class="icon"><i class="fas fa-book"></i></div>
                 <a href="{{ route('admin.mapel.index') }}" class="small-box-footer">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
             </div>
