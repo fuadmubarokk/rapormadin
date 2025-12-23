@@ -458,7 +458,7 @@
     <section class="hero" id="beranda">
         <div class="container hero-content">
             <h1>Rapor Madrasah Diniyah Al Amin Cintamulya</h1>
-            <p>Sistem rapor digital yang membantu madrasah mengelola nilai akademik siswa dengan mudah, efisien, dan terintegrasi</p>
+            <p>Sistem rapor digital yang membantu madrasah mengelola nilai akademik santri dengan mudah, efisien, dan terintegrasi</p>
             <div class="hero-buttons">
                 <a href="{{ route('login') }}" class="btn">
                     <i class="fas fa-sign-in-alt"></i> Masuk
@@ -470,22 +470,22 @@
     <section class="features" id="fitur">
         <div class="container">
             <h2>Fitur Unggulan</h2>
-            <p class="features-subtitle">Fitur canggih untuk membantu proses pembelajaran di madrasah Anda</p>
+            <p class="features-subtitle">Fitur canggih untuk membantu proses pembelajaran di madrasah</p>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Analisis Nilai</h3>
-                    <p>Analisis mendalam tentang perkembangan akademik siswa dengan grafik dan statistik yang informatif</p>
+                    <p>Analisis mendalam tentang perkembangan akademik santri dengan grafik dan statistik yang informatif</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Manajemen Siswa</h3>
-                    <p>Kelola data siswa, kelas, dan informasi akademik dengan mudah dan efisien</p>
+                    <h3>Manajemen Santri</h3>
+                    <p>Kelola data santri, kelas, dan informasi akademik dengan mudah dan efisien</p>
                 </div>
                 
                 <div class="feature-card">
@@ -493,7 +493,7 @@
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <h3>Rapor Digital</h3>
-                    <p>Buat rapor digital yang dapat diakses kapan saja dan di mana saja oleh orang tua/wali siswa</p>
+                    <p>Buat rapor digital yang dapat diakses kapan saja dan di mana saja oleh orang tua/wali santri</p>
                 </div>
                 
                 <div class="feature-card">
@@ -509,7 +509,7 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Keamanan Data</h3>
-                    <p>Perlindungan data siswa dengan enkripsi tingkat enterprise dan sistem backup otomatis</p>
+                    <p>Perlindungan data santri dengan enkripsi tingkat enterprise dan sistem backup otomatis</p>
                 </div>
                 
                 <div class="feature-card">
@@ -517,7 +517,7 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <h3>Komunikasi</h3>
-                    <p>Fasilitas komunikasi antara guru, siswa, dan orang tua untuk mendukung pembelajaran</p>
+                    <p>Fasilitas komunikasi antara guru, santri, dan orang tua untuk mendukung pembelajaran</p>
                 </div>
             </div>
         </div>
