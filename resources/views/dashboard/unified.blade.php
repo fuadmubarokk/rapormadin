@@ -160,7 +160,7 @@
                 </div>
                 <div class="card-body">
                     <p>Anda login sebagai <strong>{{ auth()->user()->name }}</strong> di Sistem Rapor Madrasah Diniyah Online.</p>
-                    <p>Silakan gunakan menu di sebelah kiri untuk mengelola data guru, santri, kelas, mapel, dan lainnya.</p>
+                    <p>Silakan gunakan menu di sebelah kiri untuk mengelola data ustadz/ah, santri, kelas, mapel, dan lainnya.</p>
                 </div>
             </div>
         </div>
@@ -173,7 +173,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-trophy text-warning mr-2"></i>
-                        Ranking 3 Terbaik Per Kelas
+                        Peringkat 3 Terbaik Per Kelas
                     </h3>
                 </div>
                 <div class="card-body">
