@@ -7,6 +7,16 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WaliController;
 use App\Http\Controllers\RaporController;
 use App\Http\Controllers\DashboardController;
+// Tambahkan controller baru yang sudah kita pecah
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\GuruController as AdminGuruController;
+use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Admin\MapelController;
+use App\Http\Controllers\Admin\GuruMapelKelasController;
+use App\Http\Controllers\Admin\TahunAjaranController;
+use App\Http\Controllers\Admin\SettingSekolahController;
+use App\Http\Controllers\Admin\BackupController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,74 +43,76 @@ Route::middleware(['auth'])->group(function () {
 
     // --- ROUTE GROUP ADMIN ---
     Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        // Dashboard Admin - menggunakan controller baru
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         
-        // Route untuk Guru
-        Route::get('/guru', [AdminController::class, 'guruIndex'])->name('guru.index');
-        Route::get('/guru/create', [AdminController::class, 'guruCreate'])->name('guru.create');
-        Route::post('/guru', [AdminController::class, 'guruStore'])->name('guru.store');
-        Route::get('/guru/{id}/edit', [AdminController::class, 'guruEdit'])->name('guru.edit');
-        Route::put('/guru/{id}', [AdminController::class, 'guruUpdate'])->name('guru.update');
-        Route::delete('/guru/{id}', [AdminController::class, 'guruDestroy'])->name('guru.destroy');
-        Route::get('/guru/template', [AdminController::class, 'guruTemplate'])->name('guru.template');
-        Route::post('/guru/import', [AdminController::class, 'guruImport'])->name('guru.import');
+        // Route untuk Guru - menggunakan controller baru
+        Route::get('/guru', [AdminGuruController::class, 'index'])->name('guru.index');
+        Route::get('/guru/create', [AdminGuruController::class, 'create'])->name('guru.create');
+        Route::post('/guru', [AdminGuruController::class, 'store'])->name('guru.store');
+        Route::get('/guru/{id}/edit', [AdminGuruController::class, 'edit'])->name('guru.edit');
+        Route::put('/guru/{id}', [AdminGuruController::class, 'update'])->name('guru.update');
+        Route::delete('/guru/{id}', [AdminGuruController::class, 'destroy'])->name('guru.destroy');
+        Route::get('/guru/template', [AdminGuruController::class, 'template'])->name('guru.template');
+        Route::post('/guru/import', [AdminGuruController::class, 'import'])->name('guru.import');
         
-        // Route untuk Kelas
-        Route::get('/kelas', [AdminController::class, 'kelasIndex'])->name('kelas.index');
-        Route::post('/kelas', [AdminController::class, 'kelasStore'])->name('kelas.store');
-        Route::put('/kelas/{id}', [AdminController::class, 'kelasUpdate'])->name('kelas.update');
-        Route::delete('/kelas/{id}', [AdminController::class, 'kelasDestroy'])->name('kelas.destroy');
+        // Route untuk Kelas - menggunakan controller baru
+        Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+        Route::post('/kelas', [KelasController::class, 'store'])->name('kelas.store');
+        Route::put('/kelas/{id}', [KelasController::class, 'update'])->name('kelas.update');
+        Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
         
-        // Route untuk Siswa
-        Route::get('/siswa', [AdminController::class, 'siswaIndex'])->name('siswa.index');
-        Route::post('/siswa', [AdminController::class, 'siswaStore'])->name('siswa.store');
-        Route::delete('/siswa/destroy-all', [AdminController::class, 'siswaDestroyAll'])->name('siswa.destroyAll');
-        Route::get('/siswa/{id}/edit', [AdminController::class, 'siswaEdit'])->name('siswa.edit');
-        Route::put('/siswa/{id}', [AdminController::class, 'siswaUpdate'])->name('siswa.update');
-        Route::delete('/siswa/{id}', [AdminController::class, 'siswaDestroy'])->name('siswa.destroy');
-        Route::get('/siswa/template', [AdminController::class, 'siswaTemplate'])->name('siswa.template');
-        Route::post('/siswa/import', [AdminController::class, 'siswaImport'])->name('siswa.import');
+        // Route untuk Siswa - menggunakan controller baru
+        Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+        Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
+        Route::delete('/siswa/destroy-all', [SiswaController::class, 'destroyAll'])->name('siswa.destroyAll');
+        Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
+        Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
+        Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+        Route::get('/siswa/template', [SiswaController::class, 'template'])->name('siswa.template');
+        Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
  
-        // Route untuk Mapel
-        Route::get('/mapel', [AdminController::class, 'mapelIndex'])->name('mapel.index');
-        Route::post('/mapel', [AdminController::class, 'mapelStore'])->name('mapel.store');
-        Route::put('/mapel/{id}', [AdminController::class, 'mapelUpdate'])->name('mapel.update');
-        Route::delete('/mapel/{id}', [AdminController::class, 'mapelDestroy'])->name('mapel.destroy');
+        // Route untuk Mapel - menggunakan controller baru
+        Route::get('/mapel', [MapelController::class, 'index'])->name('mapel.index');
+        Route::post('/mapel', [MapelController::class, 'store'])->name('mapel.store');
+        Route::put('/mapel/{id}', [MapelController::class, 'update'])->name('mapel.update');
+        Route::delete('/mapel/{id}', [MapelController::class, 'destroy'])->name('mapel.destroy');
         
-        Route::get('/mapel/urutan/{angkatanId}', [AdminController::class, 'showMapelUrutan'])->name('mapel.urutan');
-        Route::post('/mapel/urutan/update', [AdminController::class, 'updateMapelUrutan'])->name('mapel.urutan.update');
+        // Route untuk urutan mapel - menggunakan controller baru
+        Route::get('/mapel/urutan/{angkatanId}', [MapelController::class, 'showMapelUrutan'])->name('mapel.urutan');
+        Route::post('/mapel/urutan/update', [MapelController::class, 'updateMapelUrutan'])->name('mapel.urutan.update');
         
-        // --- ROUTE UNTUK PENUGASAN GURU (YANG SUDAH DIPERBAIKI) ---
-        Route::get('/guru-mapel-kelas', [AdminController::class, 'guruMapelKelasIndex'])->name('guru_mapel_kelas.index');
-        Route::post('/guru-mapel-kelas', [AdminController::class, 'guruMapelKelasStore'])->name('guru_mapel_kelas.store');
-        Route::get('/guru-mapel-kelas/{id}/edit', [AdminController::class, 'guruMapelKelasEdit'])->name('guru_mapel_kelas.edit');
-        Route::put('/guru-mapel-kelas/{id}', [AdminController::class, 'guruMapelKelasUpdate'])->name('guru_mapel_kelas.update');
-        Route::delete('/guru-mapel-kelas/{id}', [AdminController::class, 'guruMapelKelasDestroy'])->name('guru_mapel_kelas.destroy');
+        // --- ROUTE UNTUK PENUGASAN GURU - menggunakan controller baru ---
+        Route::get('/guru-mapel-kelas', [GuruMapelKelasController::class, 'index'])->name('guru_mapel_kelas.index');
+        Route::post('/guru-mapel-kelas', [GuruMapelKelasController::class, 'store'])->name('guru_mapel_kelas.store');
+        Route::get('/guru-mapel-kelas/{id}/edit', [GuruMapelKelasController::class, 'edit'])->name('guru_mapel_kelas.edit');
+        Route::put('/guru-mapel-kelas/{id}', [GuruMapelKelasController::class, 'update'])->name('guru_mapel_kelas.update');
+        Route::delete('/guru-mapel-kelas/{id}', [GuruMapelKelasController::class, 'destroy'])->name('guru_mapel_kelas.destroy');
         
-        // Route untuk hapus semua dan export (URL dan nama sudah konsisten)
-        Route::delete('/guru-mapel-kelas/delete-all', [AdminController::class, 'guruMapelKelasDeleteAll'])->name('guru_mapel_kelas.delete_all');
-        Route::get('/guru-mapel-kelas/export', [AdminController::class, 'guruMapelKelasExport'])->name('guru_mapel_kelas.export');
+        // Route untuk hapus semua dan export - menggunakan controller baru
+        Route::delete('/guru-mapel-kelas/delete-all', [GuruMapelKelasController::class, 'deleteAll'])->name('guru_mapel_kelas.delete_all');
+        Route::get('/guru-mapel-kelas/export', [GuruMapelKelasController::class, 'export'])->name('guru_mapel_kelas.export');
         
-        // Route untuk Tahun Ajaran
-        Route::get('/tahun-ajaran', [AdminController::class, 'tahunAjaranIndex'])->name('tahun_ajaran.index');
-        Route::post('/tahun-ajaran', [AdminController::class, 'tahunAjaranStore'])->name('tahun_ajaran.store');
-        Route::post('/tahun-ajaran/{id}/aktifkan', [AdminController::class, 'tahunAjaranAktifkan'])->name('tahun_ajaran.aktifkan');
-        Route::delete('/tahun-ajaran/{id}', [AdminController::class, 'tahunAjaranDestroy'])->name('tahun_ajaran.destroy');
-        Route::put('/tahun-ajaran/{id}', [AdminController::class, 'tahunAjaranUpdate'])->name('tahun_ajaran.update');
+        // Route untuk Tahun Ajaran - menggunakan controller baru
+        Route::get('/tahun-ajaran', [TahunAjaranController::class, 'index'])->name('tahun_ajaran.index');
+        Route::post('/tahun-ajaran', [TahunAjaranController::class, 'store'])->name('tahun_ajaran.store');
+        Route::post('/tahun-ajaran/{id}/aktifkan', [TahunAjaranController::class, 'aktifkan'])->name('tahun_ajaran.aktifkan');
+        Route::delete('/tahun-ajaran/{id}', [TahunAjaranController::class, 'destroy'])->name('tahun_ajaran.destroy');
+        Route::put('/tahun-ajaran/{id}', [TahunAjaranController::class, 'update'])->name('tahun_ajaran.update');
 
-        // Route untuk Setting Sekolah
-        Route::get('/setting', [AdminController::class, 'settingSekolahIndex'])->name('setting.index');
-        Route::put('/setting', [AdminController::class, 'settingSekolahUpdate'])->name('setting.update');
+        // Route untuk Setting Sekolah - menggunakan controller baru
+        Route::get('/setting', [SettingSekolahController::class, 'index'])->name('setting.index');
+        Route::put('/setting', [SettingSekolahController::class, 'update'])->name('setting.update');
         
-        // Route untuk Upload Tanda Tangan (TAMBAHAN BARU)
-        Route::post('/upload-ttd-kepala-madrasah', [AdminController::class, 'uploadTtdKepalaMadrasah'])->name('upload.ttd.kepala');
-        Route::post('/upload-ttd-wali-kelas', [AdminController::class, 'uploadTtdWaliKelas'])->name('upload.ttd.wali');
+        // Route untuk Upload Tanda Tangan - menggunakan controller baru
+        Route::post('/upload-ttd-kepala-madrasah', [SettingSekolahController::class, 'uploadTtdKepalaMadrasah'])->name('upload.ttd.kepala');
+        Route::post('/upload-ttd-wali-kelas', [AdminGuruController::class, 'uploadTtdWaliKelas'])->name('upload.ttd.wali');
 
-        // Route untuk Backup
-        Route::get('/backup', [AdminController::class, 'listBackup'])->name('backup.index');
-        Route::post('/backup', [AdminController::class, 'backupDatabase'])->name('backup.create');
-        Route::get('/backup/download/{filename}', [AdminController::class, 'downloadBackup'])->name('backup.download');
-        Route::delete('/backup/{filename}', [AdminController::class, 'deleteBackup'])->name('backup.delete');
+        // Route untuk Backup - menggunakan controller baru
+        Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+        Route::post('/backup', [BackupController::class, 'create'])->name('backup.create');
+        Route::get('/backup/download/{filename}', [BackupController::class, 'download'])->name('backup.download');
+        Route::delete('/backup/{filename}', [BackupController::class, 'delete'])->name('backup.delete');
     });
 
     // --- ROUTE GROUP GURU ---
