@@ -20,13 +20,15 @@ return new class extends Migration
             $table->string('jenis_kelamin');
             $table->string('agama');
             $table->text('alamat');
-            $table->string('nama_ayah');
-            $table->string('nama_ibu');
-            $table->string('pekerjaan_ayah');
-            $table->string('pekerjaan_ibu');
-            $table->string('no_hp_ortu');
+            $table->string('status_keluarga')->nullable();
+            $table->string('nama_ayah')->nullable();
+            $table->string('nama_ibu')->nullable();
+            $table->string('pekerjaan_ayah')->nullable();
+            $table->string('pekerjaan_ibu')->nullable();
+            $table->string('no_hp_ortu')->nullable();
             $table->string('foto')->nullable();
-            $table->foreignId('kelas_id')->constrained('kelas');
+            $table->foreignId('kelas_id')->constrained()->onDelete('cascade');
+            $table->date('diterima_tanggal')->nullable();
             $table->timestamps();
         });
     }

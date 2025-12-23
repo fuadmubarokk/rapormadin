@@ -11,10 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('guru');
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
             $table->string('nip')->nullable();
             $table->string('no_hp')->nullable();
+            $table->string('ttd_wali_kelas')->nullable();
             $table->string('foto')->nullable();
         });
     }
@@ -24,8 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['role', 'nip', 'no_hp', 'foto']);
-        });
+        Schema::dropIfExists('users');
     }
 };

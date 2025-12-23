@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('absensi', function (Blueprint $table) {
+        Schema::create('nilai_non_tulis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('siswa_id')->constrained('siswa');
+            $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
             $table->string('semester');
             $table->string('tahun_ajaran');
-            $table->integer('sakit');
-            $table->integer('izin');
-            $table->integer('alpa');
+            $table->string('muhafadzhoh')->nullable();
+            $table->integer('qiroatul_kutub')->nullable();
+            $table->integer('taftisyul_kutub')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absensi');
+        Schema::dropIfExists('nilai_non_tulis');
     }
 };

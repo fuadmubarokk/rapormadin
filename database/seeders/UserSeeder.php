@@ -2,33 +2,35 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        // 1️⃣ Buat user admin
-        $user = User::create([
-            'name' => 'Admin Madrasah',
+        // Admin
+        $admin = User::create([
+            'name' => 'Madin Al Amin Cintamulya',
             'email' => 'admin@madrasah.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('password'), // Ganti dengan password yang aman
             'nip' => '1234567890',
             'no_hp' => '081234567890',
         ]);
+        $admin->roles()->attach(Role::where('name', 'admin')->first());
 
-        // 2️⃣ Ambil id role 'admin' dari tabel roles
-        $adminRole = DB::table('roles')->where('name', 'admin')->first();
+        // Buat beberapa guru dan wali kelas
+        User::factory()->count(5)->guru()->create()->each(function ($user) {
+            $user->roles()->attach(Role::where('name', 'guru')->first());
+        });
 
-        // 3️⃣ Tambahkan ke tabel user_roles
-        if ($adminRole) {
-            DB::table('user_roles')->insert([
-                'user_id' => $user->id,
-                'role_id' => $adminRole->id,
-            ]);
-        }
+        User::factory()->count(3)->wali()->create()->each(function ($user) {
+            $user->roles()->attach(Role::where('name', 'wali')->first());
+        });
     }
 }

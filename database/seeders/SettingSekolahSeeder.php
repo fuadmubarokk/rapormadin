@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\SettingSekolah;
+use App\Models\TahunAjaran;
+use Illuminate\Database\Seeder;
 
 class SettingSekolahSeeder extends Seeder
 {
@@ -13,12 +14,18 @@ class SettingSekolahSeeder extends Seeder
     public function run(): void
     {
         SettingSekolah::create([
-            'nama_madrasah' => 'Madrasah Diniyah Al Amin Cintamulya',
+            'nama_madrasah' => 'MADRASAH DINIYAH AL-AMIN CINTAMULYA',
             'nama_madrasah_ar' => 'المدرسة الدينية الأمين جينتا موليا',
-            'alamat' => 'Jl. KH. Hasyim Asyari No. 09, Desa Cintamulya',
-            'npsn' => '12345678',
-            'kepala_madrasah' => 'Nur Hamid',
-            'nip_kepala' => '-',
+            'desa' => 'Cintamulya',
+            'kecamatan' => 'Candipuro',
+            'kabupaten' => 'Lampung Selatan',
+            'sekretariat' => 'Jl. KH. Hasyim Asyari No. 09, Desa Cintamulya',
+            'tempat_ttd' => 'Cintamulya',
+            'tanggal_rapor' => '2025-12-19',
+            'npsn' => '123456789',
+            'kepala_madrasah' => 'NUR HAMID',
+            'tahun_ajaran_id' => TahunAjaran::where('status', 1)->first()->id,
+            'semester' => 'Ganjil',
         ]);
     }
 }

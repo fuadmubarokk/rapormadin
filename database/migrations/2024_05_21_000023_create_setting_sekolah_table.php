@@ -15,11 +15,18 @@ return new class extends Migration
             $table->id();
             $table->string('nama_madrasah');
             $table->string('nama_madrasah_ar');
-            $table->text('alamat');
+            $table->string('desa')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kabupaten')->nullable();
+            $table->string('sekretariat')->nullable();
+            $table->string('tempat_ttd')->nullable();
+            $table->date('tanggal_rapor')->nullable();
             $table->string('npsn');
             $table->string('logo')->nullable();
             $table->string('kepala_madrasah');
-            $table->string('nip_kepala');
+            $table->string('ttd_kepala_madrasah')->nullable();
+            $table->foreignId('tahun_ajaran_id')->nullable()->constrained('tahun_ajaran')->onDelete('set null');
+            $table->string('semester')->nullable();
             $table->timestamps();
         });
     }

@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilai', function (Blueprint $table) {
+        Schema::create('absensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('siswa_id')->constrained('siswa');
-            $table->foreignId('guru_mapel_kelas_id')->constrained('guru_mapel_kelas');
+            $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
             $table->string('semester');
             $table->string('tahun_ajaran');
-            $table->integer('nilai_uas');
-            $table->string('predikat')->nullable();
-            $table->text('deskripsi')->nullable();
+            $table->integer('sakit')->nullable();
+            $table->integer('izin')->nullable();
+            $table->integer('alpa')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilai');
+        Schema::dropIfExists('absensi');
     }
 };

@@ -29,6 +29,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'nip' => fake()->unique()->numerify('##########'),
+            'no_hp' => fake()->phoneNumber(),
         ];
     }
 
@@ -39,6 +41,39 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Create an admin user.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+        ]);
+    }
+
+    /**
+     * Create a teacher user.
+     */
+    public function guru(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Guru User',
+            'email' => fake()->unique()->safeEmail(),
+        ]);
+    }
+
+    /**
+     * Create a wali kelas user.
+     */
+    public function wali(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Wali Kelas User',
+            'email' => fake()->unique()->safeEmail(),
         ]);
     }
 }

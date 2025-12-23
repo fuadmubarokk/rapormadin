@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilai_non_tulis', function (Blueprint $table) {
+        Schema::create('mapel_angkatan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('siswa_id')->constrained('siswa');
-            $table->string('semester');
-            $table->string('tahun_ajaran');
-            $table->string('muhafadzhoh');
-            $table->integer('qiroatul_kutub');
-            $table->integer('taftisyul_kutub');
+            $table->foreignId('mapel_id')->constrained()->onDelete('cascade');
+            $table->foreignId('angkatan_id')->constrained()->onDelete('cascade');
+            $table->integer('urutan');
             $table->timestamps();
+            
+            $table->unique(['mapel_id', 'angkatan_id']);
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilai_non_tulis');
+        Schema::dropIfExists('mapel_angkatan');
     }
 };
