@@ -121,7 +121,7 @@
     <div class="row">
         <div class="col-lg-3 col-md-6 col-12">
             <div class="small-box bg-info">
-                <div class="inner"><h3>{{ $totalGuru }}</h3><p>Total Guru</p></div>
+                <div class="inner"><h3>{{ $totalGuru }}</h3><p>Total Ustadz/ah</p></div>
                 <div class="icon"><i class="fas fa-users"></i></div>
                 <a href="{{ route('admin.guru.index') }}" class="small-box-footer">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
             </div>
