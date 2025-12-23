@@ -119,8 +119,7 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
    ```bash
    php artisan serve
 
-
-   Akses aplikasi melalui browser:
+6. **Akses aplikasi melalui browser:**
    ```bash
    http://127.0.0.1:8000
 
