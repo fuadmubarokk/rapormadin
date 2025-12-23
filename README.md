@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/fuadmubarokk/rapormadin" target="_blank"><img src="https://raw.githubusercontent.com/fuadmubarokk/rapormadin/main/public/img/logo.png" width="400" alt="Rapor Madin Logo"></a></p>
+<p align="center"><a href="https://github.com/fuadmubarokk/rapormadin" target="_blank"><img src="https://github.com/fuadmubarokk/rapormadin/blob/master/public/img/logo.png" width="400" alt="Rapor Madin Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/fuadmubarokk/rapormadin/actions"><img src="https://github.com/fuadmubarokk/rapormadin/workflows/tests/badge.svg" alt="Build Status"></a>
