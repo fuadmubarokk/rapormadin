@@ -1,22 +1,53 @@
-# Rapor Madin
+# Rapor Madrasah Diniyah
 
 <p align="center">
   <a href="https://github.com/fuadmubarokk/rapormadin" target="_blank">
-    <img src="https://raw.githubusercontent.com/fuadmubarokk/rapormadin/main/public/images/logo-madrasah.png" width="400" alt="Rapor Madin Logo">
+    <img src="https://raw.githubusercontent.com/fuadmubarokk/rapormadin/master/public/img/logo.png"
+     width="400"
+     alt="Rapor Madin Logo">
   </a>
 </p>
 
 <p align="center">
+  <!-- Build Status / GitHub Actions -->
   <a href="https://github.com/fuadmubarokk/rapormadin/actions">
-    <img src="https://github.com/fuadmubarokk/rapormadin/workflows/tests/badge.svg" alt="Build Status">
+    <img src="https://github.com/fuadmubarokk/rapormadin/actions/workflows/tests.yml/badge.svg"
+         alt="Build Status">
   </a>
-  <a href="https://github.com/fuadmubarokk/rapormadin">
-    <img src="https://img.shields.io/github/stars/fuadmubarokk/rapormadin?style=social" alt="GitHub Stars">
+
+  <!-- Stars -->
+  <a href="https://github.com/fuadmubarokk/rapormadin/stargazers">
+    <img src="https://img.shields.io/github/stars/fuadmubarokk/rapormadin?style=social"
+         alt="GitHub Stars">
   </a>
-  <a href="https://github.com/fuadmubarokk/rapormadin">
-    <img src="https://img.shields.io/github/license/fuadmubarokk/rapormadin" alt="License">
+
+  <!-- License -->
+  <a href="https://github.com/fuadmubarokk/rapormadin/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/fuadmubarokk/rapormadin"
+         alt="License">
   </a>
+
+  <!-- PHP Version -->
+  <img src="https://img.shields.io/badge/PHP-8.2-blue"
+       alt="PHP Version">
+
+  <!-- Laravel -->
+  <img src="https://img.shields.io/badge/Laravel-10-red"
+       alt="Laravel Version">
+
+  <!-- Last Commit -->
+  <img src="https://img.shields.io/github/last-commit/fuadmubarokk/rapormadin"
+       alt="Last Commit">
+
+  <!-- Repo Size -->
+  <img src="https://img.shields.io/github/repo-size/fuadmubarokk/rapormadin"
+       alt="Repo Size">
+
+  <!-- Visitors -->
+  <img src="https://komarev.com/ghpvc/?username=fuadmubarokk&repo=rapormadin&label=Visitors"
+       alt="Visitors">
 </p>
+
 
 ---
 
