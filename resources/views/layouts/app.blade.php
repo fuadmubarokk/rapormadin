@@ -20,6 +20,19 @@
             font-family: 'Amiri', serif;
             direction: rtl;
         }
+
+        /* ==================== PERBAIKAN UTAMA ==================== */
+        /* PERBAIKAN TATA LETAK NAVBAR - MEMAKSA SEJAJAR DALAM SATU BARIS */
+        .main-header.navbar {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+        }
+        .main-header.navbar .navbar-nav {
+            flex-wrap: nowrap !important;
+        }
+
         /* Style untuk mode gelap. AdminLTE 3.2 sudah memiliki dukungan dark-mode yang baik */
         .dark-mode .main-header .navbar {
             background-color: #343a40;
@@ -28,30 +41,76 @@
         .dark-mode .main-sidebar {
             background-color: #343a40;
         }
-        .dark-mode .content-wrapper {
+        .dark-mode .content-wrapper, .dark-mode .content-header {
             background-color: #4b5563;
             color: #e9ecef;
         }
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #e9ecef;
+        }
+        /* Tambahan style untuk mode gelap agar lebih konsisten */
+        body.dark-mode .card {
+            background-color: #343a40;
+            border-color: #495057;
+        }
+        body.dark-mode .card-header {
+            background-color: #495057;
+            border-bottom-color: #6c757d;
+        }
+        body.dark-mode .card-title {
+            color: #f8f9fa;
+        }
+        body.dark-mode .table {
+            color: #e9ecef;
+        }
+        body.dark-mode .table-bordered,
+        body.dark-mode .table-bordered td,
+        body.dark-mode .table-bordered th {
+            border-color: #495057;
+        }
+        body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode .table thead th {
+            background-color: #495057;
+            border-color: #6c757d;
+            color: #f8f9fa;
+        }
+        body.dark-mode .text-muted {
+            color: #adb5bd !important;
+        }
+        body.dark-mode .breadcrumb {
+            background-color: transparent;
+        }
+        body.dark-mode .main-footer {
+            background-color: #343a40;
+            border-top-color: #4b5563;
+            color: #e9ecef;
+        }
+        /* ========================================================= */
+
         /* Animasi untuk dropdown */
         .dropdown-menu {
             animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity:0; transform: translateY(-10px); }
+            to { opacity:1; transform: translateY(0); }
         }
         /* Sembunyikan panah tapi tetap biarkan elemennya ada */
         .nav-sidebar .nav-item .right {
             opacity:0;
             pointer-events: none;
         }
-        @keyframes fadeIn {
-            from { opacity:0; transform: translateY(-10px); }
-            to { opacity:1; transform: translateY(0); }
-        }
-        /* Style untuk user-header */
+        /* Style untuk user-header (PERBAIKAN WARNA GRADIENT) */
         .user-header {
-            background: linear-gradient(to right, #00a808ff, #00a808ff) !important;
+            background: linear-gradient(to right, #007bff, #0056b3) !important; /* Warna yang lebih standar */
         }
         
+        /* PERBAIKAN: Style untuk responsive table */
         @media (min-width:768px) {
-            .table-responsive::ad {
+            .table-responsive thead { /* <-- DIPERBAIKI DARI ::ad MENJADI thead */
                 display: table-header-group !important;
             }
         }
@@ -59,7 +118,8 @@
     @stack('styles')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+<!-- PERBAIKAN: MENAMBAHKAN KELAS DARK MODE DARI SERVER -->
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed @if(auth()->check() && auth()->user()->isDarkMode()) dark-mode @endif">
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
@@ -177,8 +237,6 @@
                         </a>
                     </li>
 
-
-
                     <!-- Data Kelas -->
                     <li class="nav-item">
                         <a href="{{ route('admin.kelas.index') }}"
@@ -187,7 +245,6 @@
                             <p>Data Kelas</p>
                         </a>
                     </li>
-
 
                     <!-- Data Santri -->
                     <li class="nav-item">
@@ -235,8 +292,6 @@
                     </li>
 
                     @endif
-
-
 
                     <!-- Menu Gabungan untuk Guru dan Wali Kelas -->
                     @if(auth()->user()->isGuru() || auth()->user()->isWaliKelas())
@@ -291,12 +346,10 @@
                         
                             @endforeach
                         @endif
-
-
                     @endif
 
                     <!-- ========================================================= -->
-                    <!-- TAMBAHAN: MENU RAPOR UNTUK ADMIN & WALI KELAS -->
+                    <!-- MENU RAPOR UNTUK ADMIN & WALI KELAS -->
                     <!-- ========================================================= -->
                     @if(auth()->user()->isAdmin() || auth()->user()->isWaliKelas())
                     <li class="nav-item">
@@ -333,7 +386,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">@yield('title', 'Dashboard')</h1>
+                        <h1 class="m-0 text-dark">@yield('title', 'Dashboard')</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -377,7 +430,7 @@
                 </div>
                 @endif
         
-                {{-- � Tambahan: Error Import Excel --}}
+                {{-- Tambahan: Error Import Excel --}}
                 @if(session('import_errors'))
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -405,12 +458,10 @@
                         </ul>
                     </div>
                 @endif
-
         
                 @yield('content')
             </div>
         </section>
-
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -480,7 +531,6 @@
         };
 
         // --- FUNGSI UTAMA ---
-
         async function getPrayerTimes() {
             const today = new Date().toISOString().split('T')[0];
             const storageKey = `prayerTimes_${prayerCity}_${today}`;
@@ -501,11 +551,6 @@
             return null;
         }
 
-        /**
-         * Menampilkan notifikasi sholat yang berbeda berdasarkan tipenya.
-         * @param {string} prayerName - Nama sholat (misal: 'Maghrib').
-         * @param {string} type - Tipe notifikasi: 'time', 'reminder_5min', 'reminder_10min'.
-         */
         function showPrayerNotification(prayerName, type) {
             const today = new Date().toISOString().split('T')[0];
             const storageKey = `notif_${type}_shown_${prayerName}_${today}`;
@@ -529,7 +574,7 @@
                     icon = 'question';
                     break;
                 default:
-                    return; // Keluar jika tipe tidak dikenal
+                    return;
             }
 
             Swal.fire({
@@ -545,9 +590,6 @@
             localStorage.setItem(storageKey, 'true');
         }
 
-        /**
-         * Fungsi untuk mengecek semua jadwal sholat dan memicu notifikasi yang sesuai.
-         */
         function checkPrayerTimes(timings) {
             if (!timings) return;
 
@@ -560,15 +602,12 @@
                 const prayerName = prayerNames[key];
                 if (!prayerName) continue;
 
-                const prayerTime = timings[key]; // Format "HH:MM"
+                const prayerTime = timings[key];
 
-                // --- 1. Notifikasi Pertama: Tepat pada waktu sholat ---
                 if (currentTime === prayerTime) {
                     showPrayerNotification(prayerName, 'time');
                 }
 
-                // --- 2. Notifikasi Kedua: 5 menit setelah waktu sholat ---
-                // Kita perlu menambahkan 5 menit ke waktu sholat
                 const [hour, min] = prayerTime.split(':').map(Number);
                 const prayerTimePlus5 = new Date();
                 prayerTimePlus5.setHours(hour, min + 5, 0, 0);
@@ -578,7 +617,6 @@
                     showPrayerNotification(prayerName, 'reminder_5min');
                 }
 
-                // --- 3. Notifikasi Ketiga: 10 menit setelah waktu sholat ---
                 const prayerTimePlus10 = new Date();
                 prayerTimePlus10.setHours(hour, min + 10, 0, 0);
                 const timePlus10Str = `${String(prayerTimePlus10.getHours()).padStart(2, '0')}:${String(prayerTimePlus10.getMinutes()).padStart(2, '0')}`;
@@ -592,18 +630,14 @@
         // --- EKSEKUSI ---
         getPrayerTimes().then(timings => {
             if (timings) {
-                // Cek waktu setiap 30 detik
                 setInterval(() => checkPrayerTimes(timings), 30000); 
-                // Cek juga sekali saat pertama kali dimuat
                 checkPrayerTimes(timings);
             }
         });
     });
 </script>
 
-<!-- ... kode lainnya ... -->
-
-<!-- SweetAlert untuk Notifikasi Flash Session -->
+<!-- SweetAlert untuk Notifikasi Flash Session (TAMBAHAN BAIK) -->
 <script>
  $(document).ready(function() {
     // Cek dan tampilkan notifikasi sukses

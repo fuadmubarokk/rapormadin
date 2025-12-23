@@ -99,4 +99,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Kelas::class, 'wali_id');
     }
+
+    /**
+     * Periksa apakah pengguna mengaktifkan mode gelap.
+     *
+     * @return bool
+     */
+    public function isDarkMode()
+    {
+        // Mengasumsikan Anda memiliki kolom 'dark_mode' di tabel users
+        // dengan tipe boolean (0 atau 1)
+        return (bool) $this->dark_mode;
+    }
 }
