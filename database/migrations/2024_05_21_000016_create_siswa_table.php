@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('pekerjaan_ibu')->nullable();
             $table->string('no_hp_ortu')->nullable();
             $table->string('foto')->nullable();
-            $table->foreignId('kelas_id')->constrained()->onDelete('cascade');
+            $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
             $table->date('diterima_tanggal')->nullable();
             $table->timestamps();
         });

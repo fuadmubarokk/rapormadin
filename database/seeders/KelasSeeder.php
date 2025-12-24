@@ -15,7 +15,9 @@ class KelasSeeder extends Seeder
     public function run(): void
     {
         $angkatan = Angkatan::first(); // Ambil angkatan pertama
-        $waliKelas = User::role('wali')->get();
+        $waliKelas = User::whereHas('roles', function ($q) {
+            $q->where('name', 'wali');
+        })->get();
 
         $kelasData = [
             ['nama_kelas' => 'I A', 'tingkat' => 'Ula'],

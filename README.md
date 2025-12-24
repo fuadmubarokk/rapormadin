@@ -50,11 +50,12 @@ Rapor Madin mudah digunakan, powerful, dan dirancang untuk mendukung kebutuhan p
 - **Manajemen Pengguna**  
   Sistem multi-peran (Admin, Guru, Wali) dengan hak akses berbeda
 
-- **Manajemen Siswa**  
-  Kelola data siswa, kelas, dan informasi pendukung lainnya
+- **Manajemen Santru**  
+  Kelola data santri, kelas, dan informasi pendukung lainnya
 
 - **Input Nilai**  
   Sistem input nilai yang mudah, cepat, dan terstruktur
+  Terdiri dari Nilai Tulis dan Non-Tulis
 
 - **Pembuatan Rapor**  
   Generate rapor otomatis dalam format PDF profesional

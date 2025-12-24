@@ -15,7 +15,9 @@ class GuruMapelKelasSeeder extends Seeder
      */
     public function run(): void
     {
-        $gurus = User::role('guru')->get();
+        $gurus = User::whereHas('roles', function ($q) {
+            $q->where('name', 'guru');
+        })->get();
         $kelas = Kelas::all();
         $mapels = Mapel::all();
 

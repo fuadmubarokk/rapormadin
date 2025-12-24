@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('mapel_angkatan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mapel_id')->constrained()->onDelete('cascade');
-            $table->foreignId('angkatan_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mapel_id')->constrained('mapel')->onDelete('cascade');
+            $table->foreignId('angkatan_id')->constrained('angkatan')->onDelete('cascade');
             $table->integer('urutan');
             $table->timestamps();
             

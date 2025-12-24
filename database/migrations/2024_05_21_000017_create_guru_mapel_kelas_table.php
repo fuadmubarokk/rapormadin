@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('guru_mapel_kelas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('guru_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('mapel_id')->constrained()->onDelete('cascade');
-            $table->foreignId('kelas_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mapel_id')->constrained('mapel')->onDelete('cascade');
+            $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
             $table->timestamps();
         });
     }

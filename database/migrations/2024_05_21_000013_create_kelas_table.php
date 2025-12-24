@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_kelas');
             $table->foreignId('wali_id')->nullable()->constrained('users')->onDelete('set null');
             $table->string('tingkat');
-            $table->foreignId('angkatan_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('angkatan_id')->nullable()->constrained('angkatan')->onDelete('set null');
             $table->timestamps();
         });
     }
