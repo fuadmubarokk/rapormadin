@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/github/license/fuadmubarokk/rapormadin" alt="License">
   </a>
   <img src="https://img.shields.io/badge/PHP-8.2-blue" alt="PHP Version">
-  <img src="https://img.shields.io/badge/Laravel-10-red" alt="Laravel Version">
+  <img src="https://img.shields.io/badge/Laravel-12-red" alt="Laravel Version">
   <img src="https://img.shields.io/github/last-commit/fuadmubarokk/rapormadin" alt="Last Commit">
   <img src="https://img.shields.io/github/repo-size/fuadmubarokk/rapormadin" alt="Repo Size">
   <img src="https://komarev.com/ghpvc/?username=fuadmubarokk&repo=rapormadin&label=Visitors" alt="Visitors">

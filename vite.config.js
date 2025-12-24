@@ -1,11 +1,10 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+// vitest.config.js
+
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-    plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-        }),
-    ],
+  test: {
+    // Konfigurasi untuk Vitest ada di sini.
+    // Saat ini kita biarkan kosong karena belum ada test.
+  },
 });
