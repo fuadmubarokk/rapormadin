@@ -1,0 +1,37 @@
+# .github/workflows/tests.yml
+
+name: Tests
+
+on:
+  # Jalankan workflow setiap ada push ke branch 'main'
+  push:
+    branches: [ "main" ]
+  # Jalankan workflow setiap ada pull request yang menarget branch 'main'
+  pull_request:
+    branches: [ "main" ]
+
+  # Memungkinkan Anda untuk menjalankan workflow ini secara manual dari tab Actions di GitHub
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download kode dari repositori Anda
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup environment Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Gunakan versi Node.js yang Anda butuhkan
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Jalankan test
+      - name: Run tests
+        run: npm test
