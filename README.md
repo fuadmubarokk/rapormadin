@@ -118,12 +118,13 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
    php artisan key:generate
    
 4. **Konfigurasi database dan jalankan migrasi**
-<br></br>
+<br>
   Pastikan pengaturan database di file .env sudah benar, kemudian jalankan:
    ```bash
    php artisan migrate
 
 5. **Jalankan Database Seeder**
+<br>
   Setelah tabel-tabel berhasil dibuat, jalankan perintah berikut untuk mengisi database dengan data awal:
    ```bash
    php artisan db:seed
@@ -136,15 +137,6 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
    ```bash
    http://127.0.0.1:8000
 
-
-## 🤝 Kontribusi
-1. Fork repository ini
-2. Buat branch fitur baru
-3. Commit perubahan
-4. Push ke branch
-5. Buat Pull Request
-
 ## 🔐 Kerentanan Keamanan
 Jika Anda menemukan kerentanan keamanan pada aplikasi ini, silakan laporkan melalui email:
 📧 fuadmubarok1998@gmail.com
-Setiap laporan akan ditangani dengan serius dan secepat mungkin.
