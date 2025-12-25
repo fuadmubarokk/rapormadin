@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('siswa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('siswa_id')->constrained('siswa')->onDelete('cascade');
             $table->string('semester');
             $table->string('tahun_ajaran');
             $table->integer('sakit')->nullable();
