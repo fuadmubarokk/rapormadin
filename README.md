@@ -98,7 +98,7 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
 - PHP >= 8.2
 - Composer
 - Node.js & NPM
-- Database (MySQL / PostgreSQL)
+- Database (MySQL)
 
 ### Langkah-langkah Instalasi
 
@@ -122,11 +122,16 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
    ```bash
    php artisan migrate
 
-5. **Jalankan aplikasi**
+5. **Jalankan Database Seeder**
+  Setelah tabel-tabel berhasil dibuat, jalankan perintah berikut untuk mengisi database dengan data awal:
+   ```bash
+   php artisan db:seed
+
+6. **Jalankan aplikasi**
    ```bash
    php artisan serve
 
-6. **Akses aplikasi melalui browser:**
+7. **Akses aplikasi melalui browser:**
    ```bash
    http://127.0.0.1:8000
 
@@ -137,9 +142,6 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
 3. Commit perubahan
 4. Push ke branch
 5. Buat Pull Request
-
-## 📜 Kode Etik
-Seluruh kontributor diharapkan menjaga sikap profesional dan saling menghormati dalam pengembangan Rapor Madin.
 
 ## 🔐 Kerentanan Keamanan
 Jika Anda menemukan kerentanan keamanan pada aplikasi ini, silakan laporkan melalui email:
