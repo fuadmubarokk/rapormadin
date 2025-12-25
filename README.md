@@ -118,7 +118,7 @@ Dokumentasi ini membantu pengguna memahami alur penggunaan aplikasi dari awal hi
    php artisan key:generate
    
 4. **Konfigurasi database dan jalankan migrasi**
-   Pastikan pengaturan database di file .env sudah benar, kemudian jalankan:
+  Pastikan pengaturan database di file .env sudah benar, kemudian jalankan:
    ```bash
    php artisan migrate
 
