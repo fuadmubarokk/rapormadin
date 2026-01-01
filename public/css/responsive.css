@@ -1,0 +1,261 @@
+/* 
+   FILE: public/css/responsive.css
+   CSS Responsif untuk Bootstrap 5 + AdminLTE 3.2
+*/
+
+/* ============================================
+   BREAKPOINTS BOOTSTRAP 5:
+   - xs: < 576px        (tidak ada breakpoint khusus)
+   - sm: ≥ 576px
+   - md: ≥ 768px  
+   - lg: ≥ 992px
+   - xl: ≥ 1200px
+   - xxl: ≥ 1400px
+   ============================================ */
+
+/* Extra small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+    /* Utility untuk mobile */
+    .d-xs-none { display: none !important; }
+    .d-xs-block { display: block !important; }
+    .d-xs-flex { display: flex !important; }
+    .d-xs-inline { display: inline !important; }
+    .d-xs-inline-block { display: inline-block !important; }
+    
+    /* Layout */
+    .container, .container-fluid {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    /* Card header dengan tools */
+    .card-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .card-title {
+        margin-bottom: 1rem !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+    
+    .card-tools {
+        width: 100% !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+        justify-content: center !important;
+    }
+    
+    /* Input dan select dalam card-tools */
+    .card-tools .form-control,
+    .card-tools select {
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Tombol dalam card-tools */
+    .card-tools .btn {
+        flex: 1 1 calc(50% - 0.25rem) !important;
+        min-width: unset !important;
+    }
+    
+    /* Tabel responsif */
+    .table-responsive {
+        --bs-table-bg: transparent !important;
+    }
+    
+    /* Hide columns on mobile */
+    .mobile-hide {
+        display: none !important;
+    }
+    
+    .table th.mobile-hide,
+    .table td.mobile-hide {
+        display: none !important;
+    }
+    
+    /* Pagination kecil */
+    .pagination {
+        --bs-pagination-padding-x: 0.5rem;
+        --bs-pagination-padding-y: 0.25rem;
+        --bs-pagination-font-size: 0.875rem;
+    }
+    
+    /* Navbar adjustments */
+    .navbar-nav {
+        flex-direction: row !important;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.5rem !important;
+    }
+    
+    /* Modals */
+    .modal-dialog {
+        margin: 0.5rem !important;
+        max-width: calc(100% - 1rem) !important;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .card-tools {
+        flex-wrap: wrap !important;
+    }
+    
+    .card-tools .form-control,
+    .card-tools select {
+        width: calc(50% - 0.5rem) !important;
+    }
+    
+    .card-tools .btn {
+        flex: 1 1 calc(33.333% - 0.5rem) !important;
+    }
+    
+    .table td, .table th {
+        padding: 0.5rem !important;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    /* Tablet optimizations */
+    .card-tools .btn span:not(.sr-only) {
+        display: inline !important;
+    }
+}
+
+/* Bootstrap 5 Specific Fixes */
+/* Fix untuk AdminLTE + Bootstrap 5 */
+.navbar-nav .nav-link {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+}
+
+/* Form controls responsif */
+.form-control, .form-select {
+    max-width: 100% !important;
+}
+
+/* Button groups responsif */
+.btn-group {
+    flex-wrap: wrap !important;
+}
+
+.btn-group > .btn {
+    flex: 1 1 auto !important;
+    margin-bottom: 0.25rem !important;
+}
+
+/* Grid system adjustments */
+.row {
+    --bs-gutter-x: 1rem !important;
+}
+
+/* Custom utility classes untuk responsif */
+.w-sm-100 { width: 100% !important; }
+.w-md-50 { width: 50% !important; }
+.w-lg-25 { width: 25% !important; }
+
+.gap-1 { gap: 0.25rem !important; }
+.gap-2 { gap: 0.5rem !important; }
+.gap-3 { gap: 1rem !important; }
+
+/* Text alignment untuk mobile */
+.text-xs-start { text-align: left !important; }
+.text-xs-center { text-align: center !important; }
+.text-xs-end { text-align: right !important; }
+
+@media (min-width: 576px) {
+    .text-sm-start { text-align: left !important; }
+    .text-sm-center { text-align: center !important; }
+    .text-sm-end { text-align: right !important; }
+}
+
+/* Margin and padding helpers */
+.m-xs-1 { margin: 0.25rem !important; }
+.m-xs-2 { margin: 0.5rem !important; }
+.p-xs-1 { padding: 0.25rem !important; }
+.p-xs-2 { padding: 0.5rem !important; }
+
+/* Table row hover effect untuk mobile */
+@media (hover: hover) and (pointer: fine) {
+    .table-hover tbody tr:hover {
+        --bs-table-accent-bg: rgba(0, 0, 0, 0.075) !important;
+    }
+}
+
+/* Loading indicator responsif */
+@media (max-width: 576px) {
+    #loadingIndicator {
+        padding: 1rem !important;
+    }
+    
+    #loadingIndicator .fa-spinner {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Dark mode responsive fixes */
+@media (max-width: 576px) {
+    .dark-mode .card {
+        --bs-card-bg: #2d3748 !important;
+    }
+    
+    .dark-mode .table {
+        --bs-table-bg: transparent !important;
+        --bs-table-color: #e2e8f0 !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .card-tools,
+    .btn,
+    .no-print {
+        display: none !important;
+    }
+    
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Style untuk sorting */
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.sortable:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sortable.asc .sort-icon {
+    color: #007bff;
+}
+
+.sortable.desc .sort-icon {
+    color: #007bff;
+    transform: rotate(180deg);
+}
+
+.sortable .sort-icon {
+    transition: transform 0.2s ease, color 0.2s ease;
+    font-size: 0.8em;
+}
+
+/* Dark mode support */
+.dark-mode .sortable:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .sortable.asc .sort-icon,
+.dark-mode .sortable.desc .sort-icon {
+    color: #4dabf7;
+}

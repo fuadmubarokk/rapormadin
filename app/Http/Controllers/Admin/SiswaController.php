@@ -25,26 +25,73 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         $query = Siswa::with('kelas');
-    
+        
+        // Pencarian
         if ($request->filled('search')) {
             $searchTerm = $request->search;
-            $query->where('nama', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('nisn', 'like', '%' . $searchTerm . '%');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('nama', 'like', '%' . $searchTerm . '%')
+                ->orWhere('nisn', 'like', '%' . $searchTerm . '%');
+            });
         }
-    
+        
+        // Filter kelas
         if ($request->filled('kelas_id')) {
             $query->where('kelas_id', $request->kelas_id);
         }
-    
-        $siswa = $query->paginate(20);
-        $kelas = Kelas::all();
-    
-        if ($request->ajax()) {
-            $tableHtml = view('admin.siswa._table_partial', compact('siswa'))->render();
-            $paginationHtml = $siswa->links('pagination::bootstrap-4')->toHtml();
-            return response()->json(['table' => $tableHtml, 'pagination' => $paginationHtml]);
+        
+        // Debug: Log parameter sorting
+        \Log::info('Sorting parameters:', [
+            'sort' => $request->get('sort'),
+            'dir' => $request->get('dir')
+        ]);
+        
+        // Sorting
+        $sortColumn = $request->get('sort', 'id');
+        $sortDirection = $request->get('dir', 'asc');
+        
+        // Mapping kolom dari frontend ke database
+        $sortMapping = [
+            'nisn' => 'nisn',
+            'nama' => 'nama', 
+            'kelas' => 'kelas_id',
+            'kelas_id' => 'kelas_id'
+        ];
+        
+        // Gunakan mapping atau default ke id
+        $dbSortColumn = $sortMapping[$sortColumn] ?? 'id';
+        
+        // Validasi direction
+        $sortDirection = in_array(strtolower($sortDirection), ['asc', 'desc']) 
+            ? strtolower($sortDirection) 
+            : 'asc';
+        
+        // Apply sorting
+        if ($dbSortColumn === 'kelas_id') {
+            // Sorting by kelas nama
+            $query->leftJoin('kelas', 'siswa.kelas_id', '=', 'kelas.id')
+                ->orderBy('kelas.nama_kelas', $sortDirection)
+                ->select('siswa.*');
+        } else {
+            $query->orderBy($dbSortColumn, $sortDirection);
         }
-    
+        
+        // Jumlah data per halaman
+        $perPage = $request->get('per_page', 20);
+        $siswa = $query->paginate($perPage)->withQueryString();
+        $kelas = Kelas::all();
+        
+        // Jika request AJAX, kembalikan JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            $tableHtml = view('admin.siswa._table_partial', compact('siswa'))->render();
+            
+            return response()->json([
+                'table' => $tableHtml,
+                'sort' => $sortColumn,
+                'dir' => $sortDirection
+            ]);
+        }
+        
         return view('admin.siswa.index', compact('siswa', 'kelas'));
     }
 
@@ -58,12 +105,30 @@ class SiswaController extends Controller
     
         Siswa::create($data);
     
+        // Jika request AJAX
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data siswa berhasil ditambahkan'
+            ]);
+        }
+    
         return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::with('kelas')->findOrFail($id);
+        
+        // Jika request AJAX
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'siswa' => $siswa
+            ]);
+        }
+        
+        // Fallback untuk non-AJAX request
         $kelas = Kelas::all();
         return view('admin.siswa.edit', compact('siswa', 'kelas'));
     }
@@ -74,10 +139,20 @@ class SiswaController extends Controller
         $data = $request->all();
             
         if ($request->hasFile('foto')) {
-            $data['foto'] = $this->handleFileUpload($request->file('foto'), 'img/foto_siswa', $siswa->foto);
+            // Hapus file lama jika ada file baru
+            $oldFoto = $siswa->foto;
+            $data['foto'] = $this->handleFileUpload($request->file('foto'), 'img/foto_siswa', $oldFoto);
         }
             
         $siswa->update($data);
+    
+        // Jika request AJAX
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data siswa berhasil diperbarui'
+            ]);
+        }
     
         return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil diperbarui');
     }
@@ -91,6 +166,14 @@ class SiswaController extends Controller
         }
 
         $siswa->delete();
+
+        // Jika request AJAX
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data siswa berhasil dihapus'
+            ]);
+        }
 
         return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil dihapus');
     }
@@ -121,9 +204,6 @@ class SiswaController extends Controller
                         ->with('success', 'Semua data siswa berhasil dihapus secara permanen.');
     }
 
-    /**
-     * Import data siswa dari Excel
-     */
     public function import(Request $request)
     {
         $request->validate([
@@ -135,21 +215,41 @@ class SiswaController extends Controller
         try {
             Excel::import($import, $request->file('file'));
         } catch (\Exception $e) {
+            // Jika request AJAX
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan saat membaca file: ' . $e->getMessage()
+                ], 400);
+            }
             return back()->with('error', 'Terjadi kesalahan saat membaca file: ' . $e->getMessage());
         }
     
         $allErrors = $import->customErrors;
     
         if (!empty($allErrors)) {
+            // Jika request AJAX
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan validasi',
+                    'errors' => $allErrors
+                ], 422);
+            }
             return back()->with('import_errors', $allErrors);
+        }
+    
+        // Jika request AJAX
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Import data siswa berhasil!'
+            ]);
         }
     
         return back()->with('success', 'Import data siswa berhasil!');
     }
     
-    /**
-     * Download template untuk import siswa
-     */
     public function template()
     {
         $path = public_path('template/template_siswa.xlsx');

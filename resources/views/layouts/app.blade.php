@@ -7,14 +7,25 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Sistem Rapor Madrasah Diniyah')</title>
     <link rel="icon" type="image/png" href="/img/favicon.png">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AdminLTE Theme style -->
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- AdminLTE 3.2 (Support Bootstrap 5) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    
     <!-- Font Arab -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Responsive CSS (BARU) -->
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    
     <style>
         .font-arab {
             font-family: 'Amiri', serif;
@@ -110,10 +121,45 @@
         
         /* PERBAIKAN: Style untuk responsive table */
         @media (min-width:768px) {
-            .table-responsive thead { /* <-- DIPERBAIKI DARI ::ad MENJADI thead */
+            .table-responsive thead {
                 display: table-header-group !important;
             }
         }
+        
+        /* Background transparan dengan latar belakang putih semi-transparan */
+        .custom-preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,.85);
+        }
+
+        .dark-mode .custom-preloader {
+            background: rgba(0,0,0,.7);
+        }
+
+        .ring-loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(0,0,0,.2);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .dark-mode .ring-loader {
+            border-color: rgba(255,255,255,.2);
+            border-top-color: #fff;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========================================================= */
     </style>
     @stack('styles')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -121,9 +167,9 @@
 <!-- PERBAIKAN: MENAMBAHKAN KELAS DARK MODE DARI SERVER -->
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed @if(auth()->check() && auth()->user()->isDarkMode()) dark-mode @endif">
 <div class="wrapper">
-    <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ asset('img/logo.png') }}" alt="Logo" height="60" width="60">
+    <!-- PERUBAHAN: HTML Preloader -->
+    <div class="custom-preloader flex-column justify-content-center align-items-center">
+        <div class="ring-loader"></div>
     </div>
 
     <!-- Navbar -->
@@ -141,16 +187,16 @@
         </ul>
 
         <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto"> <!-- PERUBAHAN: ml-auto menjadi ms-auto (Bootstrap 5) -->
 
             <!-- User Menu Dropdown -->
             <li class="nav-item dropdown user-menu">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"> <!-- PERUBAHAN: data-toggle -> data-bs-toggle -->
                     <!-- Menggunakan URL placeholder untuk gambar default agar tidak error jika file tidak ada -->
                     <img src="{{ auth()->user()->foto ? asset('img/foto_guru/' . auth()->user()->foto) : asset('img/profil.png') }}" class="user-image img-circle elevation-2" alt="User Image">
                     <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!-- PERUBAHAN: dropdown-menu-right -> dropdown-menu-end -->
                     <!-- User image -->
                     <li class="user-header bg-gradient-primary">
                         <img src="{{ auth()->user()->foto ? asset('img/foto_guru/' . auth()->user()->foto) : asset('img/profil.png') }}" class="img-circle elevation-2" alt="User Image">
@@ -164,7 +210,7 @@
                         <div class="row">
                             <div class="col-12 text-center">
                                 <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat btn-block">
-                                    <i class="fas fa-user mr-1"></i> Profil Saya
+                                    <i class="fas fa-user me-1"></i> Profil Saya <!-- PERUBAHAN: mr-1 -> me-1 -->
                                 </a>
                             </div>
                         </div>
@@ -389,7 +435,7 @@
                         <h1 class="m-0 text-dark">@yield('title', 'Dashboard')</h1>
                     </div>
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
+                        <ol class="breadcrumb float-sm-end"> <!-- PERUBAHAN: float-sm-right -> float-sm-end -->
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                             <li class="breadcrumb-item active">@yield('breadcrumb', 'Dashboard')</li>
                         </ol>
@@ -403,26 +449,26 @@
             <div class="container-fluid">
         
                 @if(session('success'))
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <div class="alert alert-success alert-dismissible fade show" role="alert"> <!-- PERUBAHAN: tambah fade show -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> <!-- PERUBAHAN: data-dismiss -> data-bs-dismiss -->
                     <h5><i class="icon fas fa-check"></i> Sukses!</h5>
                     {{ session('success') }}
                 </div>
                 @endif
         
                 @if(session('error'))
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     <h5><i class="icon fas fa-ban"></i> Error!</h5>
                     {{ session('error') }}
                 </div>
                 @endif
         
                 @if($errors->any())
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     <h5><i class="icon fas fa-ban"></i> Error!</h5>
-                    <ul>
+                    <ul class="mb-0"> <!-- PERUBAHAN: tambah mb-0 -->
                         @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach
@@ -432,10 +478,10 @@
         
                 {{-- Tambahan: Error Import Excel --}}
                 @if(session('import_errors'))
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         <h5><i class="icon fas fa-ban"></i> Kesalahan Import! ({{ count(session('import_errors')) }} kesalahan)</h5>
-                        <ul class="mt-2">
+                        <ul class="mt-2 mb-0">
                             @foreach(session('import_errors') as $err)
                                 <li>
                                     @if(isset($err['nama']) && isset($err['row']))
@@ -480,19 +526,22 @@
     <footer class="main-footer">
         <strong>Copyright &copy; 2025 <a href="#">Rapor Madrasah Diniyah</a>.</strong>
         All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
+        <div class="float-end d-none d-sm-inline-block"> <!-- PERUBAHAN: float-right -> float-end -->
             <b>Version</b> 1.0.0
         </div>
     </footer>
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery (tetap dipertahankan untuk kompatibilitas) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- Bootstrap 5 JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
 <!-- SweetAlert 2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -637,7 +686,7 @@
     });
 </script>
 
-<!-- SweetAlert untuk Notifikasi Flash Session (TAMBAHAN BAIK) -->
+<!-- SweetAlert untuk Notifikasi Flash Session -->
 <script>
  $(document).ready(function() {
     // Cek dan tampilkan notifikasi sukses
@@ -679,6 +728,14 @@
             text: '{{ session('info') }}'
         });
     @endif
+});
+</script>
+
+<script>
+$(window).on('load', function() {
+    setTimeout(function() {
+        $('.custom-preloader').fadeOut('slow');
+    }, 500);
 });
 </script>
 

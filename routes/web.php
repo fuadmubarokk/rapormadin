@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\SettingSekolahController;
 use App\Http\Controllers\Admin\BackupController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 require __DIR__.'/auth.php';
@@ -43,10 +43,10 @@ Route::middleware(['auth'])->group(function () {
 
     // --- ROUTE GROUP ADMIN ---
     Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
-        // Dashboard Admin - menggunakan controller baru
+        // Dashboard Admin
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         
-        // Route untuk Guru - menggunakan controller baru
+        // Guru Routes
         Route::get('/guru', [AdminGuruController::class, 'index'])->name('guru.index');
         Route::get('/guru/create', [AdminGuruController::class, 'create'])->name('guru.create');
         Route::post('/guru', [AdminGuruController::class, 'store'])->name('guru.store');
@@ -55,60 +55,54 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/guru/{id}', [AdminGuruController::class, 'destroy'])->name('guru.destroy');
         Route::get('/guru/template', [AdminGuruController::class, 'template'])->name('guru.template');
         Route::post('/guru/import', [AdminGuruController::class, 'import'])->name('guru.import');
+        Route::post('/upload-ttd-wali-kelas', [AdminGuruController::class, 'uploadTtdWaliKelas'])->name('upload.ttd.wali');
         
-        // Route untuk Kelas - menggunakan controller baru
+        // Kelas Routes
         Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
         Route::post('/kelas', [KelasController::class, 'store'])->name('kelas.store');
         Route::put('/kelas/{id}', [KelasController::class, 'update'])->name('kelas.update');
         Route::delete('/kelas/{id}', [KelasController::class, 'destroy'])->name('kelas.destroy');
         
-        // Route untuk Siswa - menggunakan controller baru
+        // Siswa Routes (DIPERBAIKI)
         Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
         Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
-        Route::delete('/siswa/destroy-all', [SiswaController::class, 'destroyAll'])->name('siswa.destroyAll');
         Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.edit');
         Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
         Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+        Route::delete('/siswa/destroy-all', [SiswaController::class, 'destroyAll'])->name('siswa.destroyAll');
         Route::get('/siswa/template', [SiswaController::class, 'template'])->name('siswa.template');
         Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
- 
-        // Route untuk Mapel - menggunakan controller baru
+        
+        // Mapel Routes
         Route::get('/mapel', [MapelController::class, 'index'])->name('mapel.index');
         Route::post('/mapel', [MapelController::class, 'store'])->name('mapel.store');
         Route::put('/mapel/{id}', [MapelController::class, 'update'])->name('mapel.update');
         Route::delete('/mapel/{id}', [MapelController::class, 'destroy'])->name('mapel.destroy');
-        
-        // Route untuk urutan mapel - menggunakan controller baru
         Route::get('/mapel/urutan/{angkatanId}', [MapelController::class, 'showMapelUrutan'])->name('mapel.urutan');
         Route::post('/mapel/urutan/update', [MapelController::class, 'updateMapelUrutan'])->name('mapel.urutan.update');
         
-        // --- ROUTE UNTUK PENUGASAN GURU - menggunakan controller baru ---
+        // Guru Mapel Kelas Routes
         Route::get('/guru-mapel-kelas', [GuruMapelKelasController::class, 'index'])->name('guru_mapel_kelas.index');
         Route::post('/guru-mapel-kelas', [GuruMapelKelasController::class, 'store'])->name('guru_mapel_kelas.store');
         Route::get('/guru-mapel-kelas/{id}/edit', [GuruMapelKelasController::class, 'edit'])->name('guru_mapel_kelas.edit');
         Route::put('/guru-mapel-kelas/{id}', [GuruMapelKelasController::class, 'update'])->name('guru_mapel_kelas.update');
         Route::delete('/guru-mapel-kelas/{id}', [GuruMapelKelasController::class, 'destroy'])->name('guru_mapel_kelas.destroy');
-        
-        // Route untuk hapus semua dan export - menggunakan controller baru
         Route::delete('/guru-mapel-kelas/delete-all', [GuruMapelKelasController::class, 'deleteAll'])->name('guru_mapel_kelas.delete_all');
         Route::get('/guru-mapel-kelas/export', [GuruMapelKelasController::class, 'export'])->name('guru_mapel_kelas.export');
         
-        // Route untuk Tahun Ajaran - menggunakan controller baru
+        // Tahun Ajaran Routes
         Route::get('/tahun-ajaran', [TahunAjaranController::class, 'index'])->name('tahun_ajaran.index');
         Route::post('/tahun-ajaran', [TahunAjaranController::class, 'store'])->name('tahun_ajaran.store');
         Route::post('/tahun-ajaran/{id}/aktifkan', [TahunAjaranController::class, 'aktifkan'])->name('tahun_ajaran.aktifkan');
         Route::delete('/tahun-ajaran/{id}', [TahunAjaranController::class, 'destroy'])->name('tahun_ajaran.destroy');
         Route::put('/tahun-ajaran/{id}', [TahunAjaranController::class, 'update'])->name('tahun_ajaran.update');
-
-        // Route untuk Setting Sekolah - menggunakan controller baru
+        
+        // Setting Sekolah Routes
         Route::get('/setting', [SettingSekolahController::class, 'index'])->name('setting.index');
         Route::put('/setting', [SettingSekolahController::class, 'update'])->name('setting.update');
-        
-        // Route untuk Upload Tanda Tangan - menggunakan controller baru
         Route::post('/upload-ttd-kepala-madrasah', [SettingSekolahController::class, 'uploadTtdKepalaMadrasah'])->name('upload.ttd.kepala');
-        Route::post('/upload-ttd-wali-kelas', [AdminGuruController::class, 'uploadTtdWaliKelas'])->name('upload.ttd.wali');
-
-        // Route untuk Backup - menggunakan controller baru
+        
+        // Backup Routes
         Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
         Route::post('/backup', [BackupController::class, 'create'])->name('backup.create');
         Route::get('/backup/download/{filename}', [BackupController::class, 'download'])->name('backup.download');
